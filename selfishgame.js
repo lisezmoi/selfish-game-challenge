@@ -25,16 +25,16 @@ var THEMES = [
   'It’s not funny anymore'
 ];
 
-var requestAnimationFrame = requestAnimationFrame || function(cb) {
-  setTimeout(cb, 10);
+var button = document.querySelector('#generator');
+var colon = button.previousElementSibling;
+
+var init = function() {
+  off(button, 'click', init);
+  colon.hidden = false;
+  start(button);
 };
 
-function on(elt, name, cb) {
-  elt.addEventListener(name, cb);
-}
-function off(elt, name, cb) {
-  elt.removeEventListener(name, cb);
-}
+on(button, 'click', init);
 
 function nextTheme(index) {
   if (++index < THEMES.length) return index;
@@ -44,32 +44,39 @@ function nextTheme(index) {
 function start(elt) {
   var currentTheme = 0;
   var displayedTheme = null;
-  var stop = false;
+  var stopped = true;
 
   var update = function() {
     setTimeout(update, UPDATE_DELAY);
-    if (stop) return;
+    if (stopped) return;
     currentTheme = nextTheme(currentTheme);
   };
 
   var draw = function() {
-    requestAnimationFrame(draw);
-    if (stop) return;
+    raf(draw);
+    if (stopped) return;
     if (displayedTheme === currentTheme) return;
     elt.innerHTML = THEMES[(displayedTheme = currentTheme)];
   };
 
-  on(elt, 'click', function() {
-    stop = !stop;
+  on(document, 'click', function(event) {
+    if (event.target === elt && stopped) {
+      stopped = false;
+    } else if (!stopped) {
+      stopped = true;
+    }
   });
 
   update();
   draw();
 }
 
-var button = document.querySelector('#generator');
-var init = function() {
-  off(button, 'click', init);
-  start(button);
+var raf = requestAnimationFrame || function(cb) {
+  setTimeout(cb, 10);
 };
-on(button, 'click', init);
+function on(elt, name, cb) {
+  elt.addEventListener(name, cb);
+}
+function off(elt, name, cb) {
+  elt.removeEventListener(name, cb);
+}
