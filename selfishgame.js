@@ -11,7 +11,18 @@ var THEMES = [
   'Paul',
   'Streamed',
   'Advertising',
-  'Smelly'
+  'Smelly',
+  'Everything is dark',
+  'Inside out',
+  'I don’t want to grow up',
+  'Hardcore',
+  'War and Peace',
+  'Light',
+  'It’s not possible',
+  'Garden',
+  'I’m home!',
+  'One more time',
+  'It’s not funny anymore'
 ];
 
 var requestAnimationFrame = requestAnimationFrame || function(cb) {
