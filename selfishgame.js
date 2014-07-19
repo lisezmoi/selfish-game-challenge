@@ -17,7 +17,7 @@ var THEMES = [
   'Is this random?',
   'I don’t want to grow up',
   'Loop',
-  'Vengence',
+  'Vengeance',
   'Indians',
   'Hardcore',
   'War and Peace',
